@@ -1,0 +1,19 @@
+apply plugin: 'groovy'
+apply plugin: 'maven'
+apply plugin: 'eclipse'
+
+group = 'com.github.jochenberger'
+version = '0.0.1-SNAPSHOT'
+archivesBaseName = 'gradle-lein'
+
+repositories {
+  mavenCentral()
+  maven { url 'http://clojars.org/repo/'}
+}
+
+dependencies {
+    compile gradleApi()
+    compile localGroovy()
+    compile "leiningen-core:leiningen-core:2.3.3"
+    
+}
