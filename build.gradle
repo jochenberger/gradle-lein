@@ -3,7 +3,7 @@ apply plugin: 'maven'
 apply plugin: 'eclipse'
 
 group = 'com.github.jochenberger'
-version = '0.0.1-SNAPSHOT'
+version = '0.0.1'
 archivesBaseName = 'gradle-lein'
 
 repositories {
@@ -14,6 +14,6 @@ repositories {
 dependencies {
     compile gradleApi()
     compile localGroovy()
-    compile "leiningen-core:leiningen-core:2.3.3"
+    compile "leiningen-core:leiningen-core:2.4.2"
     
 }

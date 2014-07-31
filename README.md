@@ -3,7 +3,7 @@ gradle-lein
 
 Gradle plugin to transform leiningen build files to gradle tasks.
 
-Currently, the plugin should work with gradle 1.8.
+Currently, the plugin should work with gradle 2.0.
 
 ## What it should do
 Eventually, the plugin should be able to bootstrap a whole gradle build with all leiningen tasks (including those added by plugins (e.g. ring).
