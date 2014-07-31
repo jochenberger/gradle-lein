@@ -3,7 +3,7 @@ apply plugin: 'maven'
 apply plugin: 'eclipse'
 
 group = 'com.github.jochenberger'
-version = '0.0.1'
+version = '0.0.2-SNAPSHOT'
 archivesBaseName = 'gradle-lein'
 
 repositories {
