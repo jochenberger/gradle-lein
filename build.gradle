@@ -1,5 +1,5 @@
 plugins {
-    id "com.jfrog.bintray" version "1.5"
+    id "com.jfrog.bintray" version "1.6"
 }
 
 
@@ -40,7 +40,7 @@ bintray {
     publish = true
     pkg {
         repo = 'maven'
-        name = 'com.github.ben-manes:gradle-lein'
+        name = 'com.github.jochenberger:gradle-lein'
         version {
           attributes = ['gradle-plugin' : 'com.github.jochenberger.lein:com.github.jochenberger:gradle-lein']
         }
