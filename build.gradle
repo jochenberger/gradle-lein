@@ -1,9 +1,14 @@
+plugins {
+    id "com.jfrog.bintray" version "1.5"
+}
+
+
 apply plugin: 'groovy'
 apply plugin: 'maven'
 apply plugin: 'eclipse'
 
 group = 'com.github.jochenberger'
-version = '0.0.2-SNAPSHOT'
+version = '0.0.2'
 archivesBaseName = 'gradle-lein'
 
 repositories {
@@ -14,7 +19,7 @@ repositories {
 dependencies {
     compile gradleApi()
     compile localGroovy()
-    compile "leiningen-core:leiningen-core:2.4.2"
+    compile "leiningen-core:leiningen-core:2.6.1"
     
 }
 
@@ -27,3 +32,18 @@ task sourcesJar(type: Jar, dependsOn: classes) {
 artifacts {
     archives sourcesJar
 }
+
+bintray {
+    user = project.properties.bintrayUser
+    key = project.properties.bintrayAPIKey
+    configurations = ['archives']
+    publish = true
+    pkg {
+        repo = 'maven'
+        name = 'com.github.ben-manes:gradle-lein'
+        version {
+          attributes = ['gradle-plugin' : 'com.github.jochenberger.lein:com.github.jochenberger:gradle-lein']
+        }
+    }
+}
+
