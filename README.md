@@ -1,4 +1,4 @@
-gradle-lein
+gradle-lein [![Build Status](https://travis-ci.org/jochenberger/gradle-lein.svg?branch=master)](https://travis-ci.org/jochenberger/gradle-lein)
 ===========
 
 Gradle plugin to transform leiningen build files to gradle tasks.
