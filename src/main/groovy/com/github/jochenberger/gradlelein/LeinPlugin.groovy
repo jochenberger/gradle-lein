@@ -1,9 +1,15 @@
+
+
 package com.github.jochenberger.gradlelein
+
+import groovy.transform.TypeChecked
 
 import org.gradle.api.Plugin
 import org.gradle.api.Project
+import org.gradle.api.artifacts.ModuleDependency
 
 import clojure.lang.Keyword
+import clojure.lang.PersistentVector
 import clojure.lang.RT
 import clojure.lang.Symbol
 import clojure.lang.Var
@@ -11,18 +17,20 @@ import clojure.lang.Var
 class LeinPlugin implements Plugin<Project>{
 
   @Override
+  @TypeChecked
   public void apply(Project p) {
-
+    p.logger.debug("Applying plugin")
     p.extensions.create('lein', LeinPluginExtension)
-
     Var require = RT.var("clojure.core", "require");
     require.invoke(Symbol.create("leiningen.core.main"));
     require.invoke(Symbol.create("leiningen.core.user"));
     require.invoke(Symbol.create("leiningen.core.project"));
     require.invoke(Symbol.create("leiningen.core.classpath"));
     Var userInit = Var.find(Symbol.create("leiningen.core.user/init"));
-    userInit.invoke();
+    p.logger.debug("Initializing Leiningen")
 
+    userInit.invoke();
+    p.logger.debug("Reading project")
     Var readProject = Var.find(Symbol.create("leiningen.core.project/read"));
 
     Map cljProject = (Map) readProject.invoke(p.file('project.clj').absolutePath);
@@ -32,11 +40,13 @@ class LeinPlugin implements Plugin<Project>{
     List deps = cljProject.get(Keyword.find("dependencies"));
     def addedConfigurations = [];
 
-    deps.each { dep->
-      def name = dep.get(0);
-      def groupId = name.getNamespace();
-      def artifactId = name.getName();
-      def version = dep.get(1);
+    deps.each { Object o->
+      PersistentVector dep = (PersistentVector) o;
+      Symbol name = (Symbol) dep.get(0);
+
+      String groupId = name.getNamespace();
+      String artifactId = name.getName();
+      String version = dep.get(1);
       p.logger.info("dep = {} ", dep);
 
       int indexOfScope = dep.indexOf(Keyword.find("scope"));
@@ -45,7 +55,7 @@ class LeinPlugin implements Plugin<Project>{
       if (scope == null) {
         scope = "compile";
       }
-      p.logger.debug("scope =" + scope);
+      p.logger.debug("scope = {}", scope);
 
       List exclusions = null
       int indexOfExclusions = dep.indexOf(Keyword.find("exclusions"));
@@ -60,12 +70,13 @@ class LeinPlugin implements Plugin<Project>{
         addedConfigurations.add(scope)
         p.configurations.create(scope)
       }
-      def dependency = p.dependencies.add(scope,gradleDepString)
+      ModuleDependency dependency = (ModuleDependency) p.dependencies.add(scope, gradleDepString)
       if (exclusions !=null){
-        exclusions.each {exDep->
-          def exName = exDep.get(0);
-          def exGroupId = exName.getNamespace();
-          def exArtifactId = exName.getName();
+        exclusions.each { Object eo->
+          PersistentVector exDep = (PersistentVector) eo;
+          Symbol exName = (Symbol) exDep.get(0);
+          String exGroupId = exName.getNamespace();
+          String exArtifactId = exName.getName();
           p.logger.debug("EXCLUDE $exGroupId:$exArtifactId")
           dependency.exclude group: exGroupId, module: exArtifactId
         }
