@@ -4,4 +4,4 @@ cache:
   - $HOME/.gradle
 
 env:
-- GRADLE_OPTS="-XX:MaxPermSize=256m"
+- GRADLE_OPTS="-XX:MaxPermSize=512m"
