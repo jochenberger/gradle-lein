@@ -3,3 +3,5 @@ cache:
   directories:
   - $HOME/.gradle
 
+env:
+- GRADLE_OPTS="-XX:MaxPermSize=256m"
