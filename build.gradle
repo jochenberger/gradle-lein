@@ -8,7 +8,7 @@ apply plugin: 'eclipse'
 apply plugin: 'java-gradle-plugin'
 
 group = 'com.github.jochenberger'
-version = '0.0.3'
+version = '0.0.4'
 archivesBaseName = 'gradle-lein'
 
 repositories {

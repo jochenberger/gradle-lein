@@ -34,7 +34,7 @@ class LeinPlugin implements Plugin<Project>{
 
       userInit.invoke();
       p.logger.debug("Reading project")
-      Var readProject = Var.find(Symbol.create("leiningen.core.project/read"));
+      Var readProject = Var.find(Symbol.create("leiningen.core.project/read-raw"));
 
       Map cljProject = (Map) readProject.invoke(p.file('project.clj').absolutePath);
 
@@ -74,7 +74,7 @@ class LeinPlugin implements Plugin<Project>{
           p.configurations.create(scope)
         }
         ModuleDependency dependency = (ModuleDependency) p.dependencies.add(scope, gradleDepString)
-        if (exclusions !=null){
+        if (exclusions != null){
           exclusions.each { Object eo->
             PersistentVector exDep = (PersistentVector) eo;
             Symbol exName = (Symbol) exDep.get(0);
@@ -85,7 +85,7 @@ class LeinPlugin implements Plugin<Project>{
           }
         }
       }
-    }finally{
+    } finally{
       Thread.currentThread().contextClassLoader = previousClassLoader
     }
   }
