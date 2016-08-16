@@ -54,7 +54,8 @@ class LeinPluginSpec extends Specification {
       "3.0-milestone-1",
       "3.0-milestone-2",
       "3.0-rc-1",
-      "3.0-rc-2"
+      "3.0-rc-2",
+      "3.0"
     ]
   }
 }
