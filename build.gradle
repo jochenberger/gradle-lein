@@ -8,7 +8,7 @@ apply plugin: 'eclipse'
 apply plugin: 'java-gradle-plugin'
 
 group = 'com.github.jochenberger'
-version = '0.0.4'
+version = '0.0.5'
 archivesBaseName = 'gradle-lein'
 
 repositories {
@@ -17,7 +17,7 @@ repositories {
 }
 
 dependencies {
-    compile "leiningen-core:leiningen-core:2.6.1"
+    compile "leiningen-core:leiningen-core:2.7.0"
 
     testCompile ("org.spockframework:spock-core:1.0-groovy-2.4"){
       exclude module: "groovy-all"
